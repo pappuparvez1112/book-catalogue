@@ -53,11 +53,24 @@ const run = async () => {
       res.send(result);
     });
 
+    // **********************
+
+    // const multer = require("multer");
+    // const storage = multer.diskStorage({
+    //   destination: function (req, file, cb) {
+    //     cb(null, "uploads/");
+    //   },
+    //   filename: function (req, file, cb) {
+    //     const uniqueSuffix = Date.now();
+    //     cb(null, uniqueSuffix + file.originalname);
+    //   },
+    // });
+
+    // const upload = multer({ storage: storage });
+
     app.post("/books", async (req, res) => {
       const project = req.body;
-
       const result = await booksCollection.insertOne(project);
-
       res.send(result);
     });
 
@@ -76,7 +89,11 @@ const run = async () => {
       const updateBook = req.body;
       const book = {
         $set: {
-          title: updateBook.title,
+          BookImage: updateBook.BookImage,
+          BookTitle: updateBook.BookTitle,
+          AuthorName: updateBook.AuthorName,
+          Genre: updateBook.Genre,
+          publicationYear: updateBook.publicationYear,
         },
       };
       const result = await booksCollection.updateOne(filter, book, options);
